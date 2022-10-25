@@ -9,7 +9,7 @@ const UserSchema = new Schema({
   password: { type: String },
   first_name: { type: String , required: 'must be a valid string'},
   last_name: { type: String , required:  'must be a valid string'},
-  user_type: { type: String, enum: ['Logged','logged'], default:"logged"},
+  //user_type: { type: String, enum: ['Logged','logged'], default:"logged"},
   created_at: {
     type: Date,
     default: Date.now,

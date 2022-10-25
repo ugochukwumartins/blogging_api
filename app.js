@@ -138,11 +138,8 @@ var typeUser=User.user_type;
 
 //   console.log(`pag ${paginatedOrders}`);
 //   console.log(count);
-if(typeUser === "Logged" ){
-  return res.json({ status: true, message:"your order" });}else{
-    res.status(401);
-    return res.json({ status: false, message:"401 Unauthorized" });
-  }
+
+  return res.json({ status: true, message:"your order" });
 });
 
 app.patch("/order/:id", passport.authenticate('jwt', { session: false }), async (req, res) => {

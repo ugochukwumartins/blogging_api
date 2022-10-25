@@ -51,7 +51,7 @@ app.post('/login', async (req, res, next) => {
 
           { user: body }, process.env.JWT_SECRETE, {
 
-            expiresIn: '180s' // expires in 24 hours
+            expiresIn: '1h' // expires in 24 hours
 
              }
         );
@@ -65,10 +65,16 @@ app.post('/login', async (req, res, next) => {
 
 });
 
-app.get("/", passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get("/all_published_blogs", (req, res) => {
  
-  return res.json({ status: true });
+  return res.json({ status: true , message:"this is all blog"});
 });
+
+app.get("/get_a_published_blog", (req, res) => {
+ 
+    return res.json({ status: true , message:"this is a blog"});
+  });
+
 
 app.post("/order", passport.authenticate('jwt', { session: false }), async (req, res) => {
  
@@ -105,7 +111,7 @@ app.get("/order/:orderId", passport.authenticate('jwt', { session: false }), asy
   return res.json({ status: true, order });
 });
 
-app.get("/orders", passport.authenticate('jwt', { session: false }), async (req, res) => {
+app.get("/create_blog", passport.authenticate('jwt', { session: false }), async (req, res) => {
  
 console.log(`this is ${User.last_name}`);
 console.log(`this is ${User.first_name}`);
@@ -139,7 +145,7 @@ var typeUser=User.user_type;
 //   console.log(`pag ${paginatedOrders}`);
 //   console.log(count);
 
-  return res.json({ status: true, message:"your order" });
+  return res.json({ status: true, message:"blog created" });
 });
 
 app.patch("/order/:id", passport.authenticate('jwt', { session: false }), async (req, res) => {

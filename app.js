@@ -9,71 +9,18 @@ const usersModel = require("./models/userModel");
 const jwt = require("jsonwebtoken")
 require("dotenv").config();
 require("./services/auth_with_jwt");
+const onboardingRoute = require('./routes/onboarding');
+const blogRoute = require('./routes/blogging');
 const PORT = 3000;
 let User;
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.post('/register', passport.authenticate('signup', { session: false }), async (req, res) => {
- 
-
-  return res.json({ status: true, user: req.user });
-});
-
-app.post('/login', async (req, res, next) => {
-  passport.authenticate('login', async (error, user, info) => {
-    try {
-      console.log( user);
-      if (error) {
-        return next(error);
-      };
-      if (!user) {
-        const error = new Error('user name or password is incorrects');
-        return next(error);
-      }
-      req.login(user, { session: false }, async (error) => {
-        if (error) return next(error);
-
-        const body = {
-
-          email: user.email,
-          password: user.password,
-          first_name: user.first_name,
-          last_name: user.last_name,
-          user_type: user.user_type,
-          age: user.age,
-          _id: user._id,
-          created_at: user.created_at,
-        };
-        User= body;
-        const token = jwt.sign(
-
-          { user: body }, process.env.JWT_SECRETE, {
-
-            expiresIn: '1h' // expires in 24 hours
-
-             }
-        );
-        return res.json({ status: true, token: token });
-      })
-    } catch (error) {
-      return next(error)
-    }
-  })(req, res, next) ;
+app.use(onboardingRoute);
+app.use(blogRoute);
 
 
-});
-
-app.get("/all_published_blogs", (req, res) => {
- 
-  return res.json({ status: true , message:"this is all blog"});
-});
-
-app.get("/get_a_published_blog", (req, res) => {
- 
-    return res.json({ status: true , message:"this is a blog"});
-  });
 
 
 app.post("/order", passport.authenticate('jwt', { session: false }), async (req, res) => {
@@ -111,42 +58,7 @@ app.get("/order/:orderId", passport.authenticate('jwt', { session: false }), asy
   return res.json({ status: true, order });
 });
 
-app.get("/create_blog", passport.authenticate('jwt', { session: false }), async (req, res) => {
- 
-console.log(`this is ${User.last_name}`);
-console.log(`this is ${User.first_name}`);
-console.log(`this is ${User._id}`);
-console.log(`this is ${User.age}`);
-console.log(`this is ${User.created_at}`);
-console.log(`this is ${User.user_type}`);
-var typeUser=User.user_type;
 
-//   const orders = await orderModel.find();
-//   const count = await orderModel.countDocuments();
-
-//   //sorting with order total price in ascending order
-//   let ascPrice = orders.sort((f, s) => f.total_price - s.total_price);
-
-//   //sorting with order date created at in ascending order
-//   let ascDate = orders.sort((f, s) => f.created_at - s.created_at);
-
-//   //quering the order db by state 
-//   const orderFound = orders.filter((user) => {
-//     return user.state === req.body.state;
-//   });
-
-//   //paginating the orders get request
-//   const paginatedOrders = await orderModel
-//     .find()
-//     .limit(limit * 1)
-//     .skip((page - 1) * limit)
-//     .exec();
-
-//   console.log(`pag ${paginatedOrders}`);
-//   console.log(count);
-
-  return res.json({ status: true, message:"blog created" });
-});
 
 app.patch("/order/:id", passport.authenticate('jwt', { session: false }), async (req, res) => {
  

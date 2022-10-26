@@ -8,7 +8,7 @@ const BlogSchema = new Schema({
   title: { type: String , required: 'please provide a valide string'},
   description: { type: String },
   author: { type: String },
-  state: { type: String },
+  state: { type: String , default :"draft"},
   read_count: { type:  Number },
   reading_time: { type: String },
   tags: { type: String },

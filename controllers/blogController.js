@@ -6,14 +6,24 @@ const blogmodel = require("../models/blogModel")
 
 exports.getAllPubBlog= async (req, res) => {
  
-    const blog = await blogmodel.find();
+  const blogs = await  blogmodel.find();
+    const blog = await blogs.filter((blog) => {
+      return blog.state === "published";
+    });
+   
     return res.json({ status: true , message:"this is all blog", blog});
   }
 
 exports.getPubBlog= async (req, res) => {
-    const blog = await blogmodel.find()
-    .limit( 1)
-    .exec();
+  
+  const blog = await  blogmodel.find({"state":"published"}).limit(1);
+    // const blog = await blogs.filter((blog) => {
+    //   return blog.state ==="draft";
+    // });
+
+    
+    
+  
     return res.json({ status: true , message:"this is a blog", blog});
   }
 exports.createPubBlog= async (req,res)=>{

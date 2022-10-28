@@ -49,3 +49,26 @@ exports.createPubBlog= async (req,res)=>{
     
     return res.json({ status: true, message:"blog created", blog });
 }
+
+
+exports.deleteBlog = async (req, res) => {
+  const blogId = req.params.id.toString();
+console.log(req.params)
+console.log(req.params.id)
+  var myquery = {"_id": blogId };
+  blogmodel.deleteOne(myquery, function(err, obj) {
+    if (err) throw err;
+    console.log(obj + " document(s) deleted");
+   
+  });
+  // Product.findByPk(productId).then(product =>{
+
+  //  return product.destroy();
+  // }).then(result =>{
+  //   console.log('result');
+  //   res.redirect("/");
+  // }).catch(erro =>{
+  //   console.log(erro);
+  // });
+ 
+};

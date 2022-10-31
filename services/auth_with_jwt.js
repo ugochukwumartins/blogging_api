@@ -33,10 +33,12 @@ passport.use(
         const first_name = req.body.first_name;
         const last_name = req.body.last_name;
         //const user_type= req.body.user_type;
+      const  user_name= req.body.user_name;
         const age = req.body.age;
         const user = await usersModel.create({
           email,
           password,
+          user_name,
           first_name,
           last_name,
          // user_type,

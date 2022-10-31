@@ -1,0 +1,29 @@
+<header class="nav-header"> 
+    <nav class="main-hader_nav">
+        <ul class="header-item_list">
+            <li class="header-item">
+                <a href="/" class="<%= path ==='/' ?  'active': '' %>">Home</a>
+            </li>
+
+          
+            <li class=" <%= user=== undefined ?'header-item' : 'visibility'   %>">
+                <a href="/home"  class="<%= path === '/home' ?  'active': '' %>">Login</a>
+            </li>
+            <li class=" <%= user=== undefined ?'header-item' : 'visibility'   %>">
+                <a href="/carts"  class="<%= path === '/carts' ?  'active': '' %>">Sign Up</a>
+            </li>
+
+            <li class=" <%= user=== undefined ? 'visibility' : 'header-item'  %>">
+                <a href="/admin/admin-products"  class="<%= path === '/admin/admin-products' ?  'active': '' %>">Admin Products</a>
+            </li>
+
+
+            <li class=" <%= user=== undefined ? 'visibility' : 'header-item'  %>">
+                <a href="/admin/add-products" class="<%= path === '/admin/add-products' ?  'active': '' %>">My blog</a>
+            </li>
+            <li class="header-item">
+                <a href="/admin/admin-products"  class="<%= path === '/admin/admin-products' ?  'active': '' %>">Orders</a>
+            </li>
+        </ul>
+    </nav>
+</header>

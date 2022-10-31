@@ -5,7 +5,7 @@ const BlogId = Schema.ObjectId;
 
 const BlogSchema = new Schema({
   id: BlogId,
-  title: { type: String , required: 'please provide a valide string'},
+  title: { type: String ,unique: true, required: 'please provide a valide string'},
   description: { type: String },
   author: { type: String },
   state: { type: String , default :"draft"},

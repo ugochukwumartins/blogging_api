@@ -7,6 +7,7 @@ const UserSchema = new Schema({
   id: UserId,
   email: { type: String ,unique: true, required: 'please provide a valide and unique email'},
   password: { type: String },
+  user_name : { type: String ,unique: true, required: 'please provide a valide and unique username'},
   first_name: { type: String , required: 'must be a valid string'},
   last_name: { type: String , required:  'must be a valid string'},
   //user_type: { type: String, enum: ['Logged','logged'], default:"logged"},

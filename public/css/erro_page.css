@@ -1,0 +1,41 @@
+body{
+    padding:0;
+    margin: 0;
+    font-family: sans-serif;
+}
+
+.nav-header{
+     width: 100%;
+     height: 56px;
+     background-color: rgb(228, 221, 16);
+     padding: 0, 1.5rem;
+}
+
+.header-item_list{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.header-item{
+    margin: 0 1rem; 
+    padding: 0;
+
+}
+.header-item a {
+text-decoration: none;
+color: black;
+}
+.header-item a:hover, .header-item a:active, .header-item a.active{
+    color: rgb(0, 72, 255);
+}
+.main-hader_nav {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+main {
+    padding: 1rem;
+}

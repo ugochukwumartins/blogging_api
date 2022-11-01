@@ -46,6 +46,7 @@ passport.use(
         });
         return done(null, user);
       } catch (error) {
+        console.log(error)
         done(error);
       }
     }
@@ -75,6 +76,7 @@ passport.use(
 
         return done(null, user, { message: "user login successfully" });
       } catch (error) {
+       
         done(error);
       }
     }

@@ -4,8 +4,9 @@ const onboardingController = require('../controllers/onboardingController');
 const OnboardingRouter = express.Router();
 
 OnboardingRouter.post('/login',onboardingController.login)
+OnboardingRouter.get('/login',onboardingController.getLogin)
 
-OnboardingRouter.post('/register',passport.authenticate('signup', { session: false }), onboardingController.signUp)
-
+OnboardingRouter.post('/register', onboardingController.signUp)
+OnboardingRouter.get('/SignUp',onboardingController.getSignup)
 
 module.exports = OnboardingRouter;

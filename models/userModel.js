@@ -16,7 +16,10 @@ const UserSchema = new Schema({
     default: Date.now,
     required: "Must have start date - default value is the created date",
   },
-  age: Number,
+  age: {
+    type: Date,
+    required: "Must not be empty",
+  },
 });
 UserSchema.pre("save", async function (next) {
   const user = this;

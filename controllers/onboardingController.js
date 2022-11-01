@@ -7,10 +7,22 @@ exports.login=(req,res, next)=>{
         try {
           console.log( user);
           if (error) {
+            res.render("error", {
+              errors:error.message,
+             // blogs: blog,
+              pageTitle: "Error",
+              path: "/error",
+            });
             return next(error);
           };
           if (!user) {
-            const error = new Error('user name or password is incorrects');
+           // const error = new Error('user name or password is incorrects');
+            res.render("error", {
+              errors:'user name or password is incorrects',
+             // blogs: blog,
+              pageTitle: "Error",
+              path: "/error",
+            });
             return next(error);
           }
           req.login(user, { session: false }, async (error) => {
@@ -42,7 +54,9 @@ exports.login=(req,res, next)=>{
             console.log(body);
             store.set('user', body)
             //localStorage.setItem("User",body )
-            return res.json({ status: true, token: token, User });
+           
+            res.redirect('/')
+           // return res.json({ status: true, token: token, User });
           })
         } catch (error) {
           return next(error)
@@ -51,9 +65,69 @@ exports.login=(req,res, next)=>{
     
    
 }
-exports.UserData=User;
-exports.signUp=  async (req, res) => {
- 
 
-    return res.json({ status: true, user: req.user });
+exports.getLogin = (req, res, next) => {
+  var users= store.get('user');
+  res.render("onboarding/login", {
+     user:users,
+    // blogs: blog,
+     pageTitle: "Login",
+     path: "/login",
+   });
+};
+
+exports.UserData=User;
+exports.signUp=  async (req, res, next) => {
+  passport.authenticate('signup', async (error, user, info) => {
+try{
+  console.log( user);
+  if (error) {
+   // res.redirect('/login')
+    res.render("error", {
+      errors:error.message,
+     // blogs: blog,
+      pageTitle: "Error",
+      path: "/error",
+    });
+    return next(error);
+  };
+  if (!user) {
+    //const error = new Error(`${error.message}`);
+    res.render("error", {
+      errors:error.message,
+     // blogs: blog,
+      pageTitle: "Error",
+      path: "/error",
+    });
+
+    return next(error);
   }
+  req.login(user, { session: false }, async (error) => {
+    if (error) return next(error);
+    console.log(user)
+  })
+   // return res.json({ status: true, user: req.user });
+    res.redirect('/login')
+  }
+    catch (error) {
+
+      res.render("error", {
+        errors:error.message,
+       // blogs: blog,
+        pageTitle: "Error",
+        path: "/error",
+      });
+     // return next(error)
+    }
+  })(req, res, next) ;}
+
+
+exports.getSignup = (req, res, next) => {
+  var users= store.get('user');
+  res.render("onboarding/sign_up", {
+     user:users,
+    // blogs: blog,
+     pageTitle: "SignUp",
+     path: "/SignUp",
+   });
+};

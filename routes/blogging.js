@@ -12,6 +12,7 @@ blogRouter.get("/",blogController.getAllPubBlog );
   blogRouter.post("/deleteBlog/:id",blogController.deleteBlog);
   blogRouter.get("/get_a_published_blog/:id",blogController.findBlogById);
   blogRouter.get("/get_a_published_blog_byAuthor/:author",blogController.findAuthor);
+  blogRouter.get("/createBlog",blogController.getCreateBlog );
   blogRouter.post("/updateBlog",blogController.updateBlog);
   
 

@@ -142,6 +142,19 @@ if(blog.length === 0){
   // });
 };
 
+exports.getCreateBlog = (req, res, next) => {
+  var users= store.get('user');
+  res.render("blog/createBlog", {
+     user:users,
+    // blogs: blog,
+     pageTitle: "Add blog",
+     path: "/createBlog",
+   });
+};
+
+
+
+
 
 
 exports.updateBlog = async (req, res) => {

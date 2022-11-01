@@ -9,7 +9,7 @@ const BlogSchema = new Schema({
   description: { type: String },
   author: { type: String },
   state: { type: String , default :"draft"},
-  read_count: { type:  Number },
+  read_count: { type:  Number , default:0},
   reading_time: { type: String },
   tags: { type: String },
   body: { type: String , required: 'must be a valid string'},

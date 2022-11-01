@@ -7,7 +7,7 @@ const requestRouter = express.Router();
 
 
 requestRouter.get("/demo",httpReq.demo);
-requestRouter.post("/create",httpReq.demo2);
+requestRouter.post("/createnewBlog",httpReq.addblog);
 
 module.exports = requestRouter;
 

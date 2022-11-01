@@ -87,13 +87,20 @@ exports.deleteBlog = async (req, res) => {
 
 exports.findBlogById = async (req, res) => {
   try {
+    var users = store.get("user");
     const blogId = req.params.id.toString();
     console.log(req.params);
     console.log(req.params.id);
     var myquery = { _id: blogId };
-    const blog = await blogmodel.find(myquery);
+    const blog = await blogmodel.findOne(myquery);
 
-    return res.json({ status: true, message: "this is a blog", blog });
+   // return res.json({ status: true, message: "this is a blog", blog });
+    res.render("blog/updateBlog", {
+      user: users,
+      blogFound : blog,
+      pageTitle: "Up Date Blog",
+      path: "/updateBlogses",
+    });
     // Product.findByPk(productId).then(product =>{
   } catch (e) {
     const blog ={}
@@ -123,8 +130,8 @@ if(blog.length === 0){
 }
     //return res.json({ status: true, message: "this is a blog", blog });
     res.render("blog/myblog", {
-      user:users,
       blogs: blog,
+      user:users,
       pageTitle: "My Blog",
       path: "/myBlog",
     });

@@ -25,28 +25,30 @@
             <input type="submit">
         </form>
         <% if (blogs.length> 0){ %>
-            <div class="grid">
+            <div class="wrapper">
                 <% for(let blog of blogs) { %>
-                    <article class="card.product-item">
+                    <a href="/updateBlog/<%=blog._id %>">
+                    <article class="box">
                         <header class="card_header">
                             <h1 class="product__title">
                                 <%= blog.title %>
                             </h1>
                         </header>
-                        <div class="card_image">
+                        <div class="card_content">
                             <p class="product__description">
-                                <%= blog.tag %>
+                                <%= blog.tags %>
                             </p>
                         </div>
                       
                         <div class="card_content">
                            
                             <p class="product__description">
-                                <%= blog.body %>
+                                <%= blog.description %>
                             </p>
                         </div>
                       
                     </article>
+                </a>
                     <% } %>
             </div>
             <% } else{ %>

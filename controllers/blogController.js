@@ -70,6 +70,7 @@ exports.deleteBlog = async (req, res) => {
     blogmodel.deleteOne(myquery, function (err, obj) {
       if (err) throw err;
       console.log(obj + " document(s) deleted");
+      res.redirect("/");
     });
   } catch (e) {
     console.log(e);
@@ -165,16 +166,76 @@ exports.getCreateBlog = (req, res, next) => {
 
 
 exports.updateBlog = async (req, res) => {
+
+  try{
   const blogId = req.params.id.toString();
+  const bodyData = req.body;
+  const blog = await blogmodel.findOne( { _id: blogId });
+  const updateval = {
+    // _id: bodyData._id,
+    // title: bodyData.title,
+    // description: bodyData.description,
+    // author: bodyData.author,
+    // state: bodyData.state,
+    read_count:blog.read_count  +1,
+    // reading_time: bodyData.reading_time,
+    // tags: bodyData.tags,
+    // body: bodyData.body,
+    // timestamp: bodyData.timestamp,
+  };
   blogmodel.updateOne(
-    { name: "Sergio Ramos" },
-    { club: "Real Madrid" },
+    { _id: blogId },
+    updateval ,
     function (err, result) {
       if (err) {
         res.send(err);
       } else {
-        res.json(result);
+       // res.json(result);
+        return res.json({ status: true, message: "Updated sucessfully",result});
       }
     }
   );
+
+  }catch(e){
+
+  }
+};
+
+
+
+
+exports.updateBlogByDetails = async (req, res) => {
+
+  try{
+  const blogId = req.params.id.toString();
+  const bodyData = req.body;
+  const blog = await blogmodel.findOne( { _id: blogId });
+  const updateval = {
+    
+    title: bodyData.title,
+    description: bodyData.description,
+   
+    state: bodyData.state,
+   
+ 
+    tags: bodyData.tags,
+    body: bodyData.body,
+  
+  };
+  blogmodel.updateOne(
+    { _id: blogId },
+    updateval ,
+    function (err, result) {
+      if (err) {
+        res.send(err);
+      } else {
+        res.redirect("/");
+       // return res.json({ status: true, message: "Updated sucessfully",result});
+      }
+    }
+  );
+
+  }catch(e){
+
+  }
 };

@@ -27,10 +27,10 @@
             <input type="submit">
         </form>
         <% if (blogs.length> 0){ %>
-            <div class="grid">
+            <div class="wrapper">
                 <% for(let blog of blogs) { %>
                     <a href="/get_a_published_blog/<%=blog._id %>">
-                    <article class="card.product-item">
+                    <article class="box">
                         <header class="card_header">
                             <h1 class="product__title">
                                 <%= blog.title %>
@@ -38,19 +38,43 @@
                         </header>
                         <div class="card_image">
                             <p class="product__description">
-                                <%= blog.tag %>
+                                <%= blog.tags %>
                             </p>
                         </div>
                       
                         <div class="card_content">
                            
                             <p class="product__description">
-                                <%= blog.body %>
+                                <%= blog.description %>
                             </p>
                         </div>
+
+                      
                       
                     </article>
                 </a>
+                <div style="display:inline-block;
+                padding: 0;
+                margin: 0;
+                
+              ">
+                      <% if (blog.state === "draft"){ %>
+                    <a href="/get_a_published_blog/<%=blog._id %>" class="btn" >Publish</a>
+                    <% } else{ %>
+                    <a href="/get_a_published_blog/<%=blog._id %>" class="btn" >Edit</a>
+                    <% }%>
+
+                    <form action="/deleteBlog/<%=blog._id %>" method="post">
+                        <button class="btn"  style="color: red; display:inline-flex;
+                        padding: 0;
+                        margin: 0;">Delete</button>
+                      
+                    </form>
+                   
+                    
+                 
+                 
+                </div>
                     <% } %>
             </div>
             <% } else{ %>

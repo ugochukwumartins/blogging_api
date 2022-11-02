@@ -8,12 +8,18 @@
     <link rel="stylesheet" href="/css/add_product.css" />
   </head>
   <body>
-    <%- include('../layout/nav.ejs') %>
+   
+    <% if (typeof user != 'undefined'){ %>
+        <%- include('../layout/nav.ejs',{author : user.user_name}) %>
+     <% } else{ %>
+         <%- include('../layout/nav.ejs') %>   
+         <% } %>
+    
 
     <% if ( blogFound != null){ %>
        
     <main>
-      <form class="product-form" action="" method="POST">
+      <form class="product-form" action="/updateBlogdetails/<%=blogFound._id %>" method="POST">
         <div class="form-control">
             <input type="hidden" name="id" id="title" value="<%=blogFound._id %>"> 
           <label for="title">Title</label>

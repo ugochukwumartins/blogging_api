@@ -23,15 +23,38 @@
 
           <label for="body">body</label>
 
-          <textarea name="body" id="body" rows="40" cols="50">
-It was a dark and stormy night...
-</textarea
-          >
+          <textarea name="body" id="body" rows="40" cols="50" onkeyup="calcRT(this)">
+</textarea>
         </div>
+        <label for="reading_time" class="visibility">Reading Time</label>
+        <input type="text" name="reading_time" id="reading_time"  class="visibility"/>
+      
 
         <button type="submit">Create Blog</button>
       </form>
     </main>
+    <script>
+        window.calcRT = () => {
+    
+    var text = document.getElementById("body").value;
+    const wordsPerMinute = 200;
+    console.log(`this is ${text}`); // Average case.
+    let result;
+    
+    let textLength =text.split(" ").length; // Split by words
+    if(textLength > 0){
+      let value = Math.ceil(textLength / wordsPerMinute);
+      result = `${value} min read`;
+      console.log(value);
+    }
+   
+      document.getElementById("reading_time").value  = result;
+
+
+ 
+  };
+   
+     </script>
   </body>
 </html>
 

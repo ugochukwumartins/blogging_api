@@ -27,6 +27,8 @@ exports.addblog = async (req, res) => {
     description: req.body.description,
 
     tags: req.body.tags,
+
+    reading_time: req.body.reading_time,
     body: req.body.body,
   };
   console.log(req.body);
@@ -41,8 +43,8 @@ exports.addblog = async (req, res) => {
       (response) => {
         var status = response.status;
         var message = response.statusText + " " + "blog created";
-        res.redirect('/')
-       // return res.json({ status: true, message });
+        res.redirect("/");
+        // return res.json({ status: true, message });
       },
       (error) => {
         var status = error.response.status;

@@ -6,23 +6,46 @@ const blogmodel = require("../models/blogModel");
 
 exports.getAllPubBlog = async (req, res) => {
   try {
+    var perPage = 2
+    var page = req.params.page || 1
     var users = store.get("user");
     //console.log(users.token);
-    const blogs = await blogmodel.find();
-    const blog = await blogs.filter((blog) => {
-      return blog.state === "published";
-    });
+    // const blogs = await blogmodel.find();
+    // const blog = await blogs.filter((blog) => {
+    //   return blog.state === "published";
+    // });
 
-    res.render("index", {
-      user: users,
-      blogs: blog,
-      pageTitle: "Home",
-      path: "/",
-    });
+    // res.render("index", {
+    //   user: users,
+    //   blogs: blog,
+    //   pageTitle: "Home",
+    //   path: "/",
+    // });
+
+
+    blogmodel
+    .find({state :"published"})
+    .skip((perPage * page) - perPage)
+    .limit(perPage)
+    .exec(function(err, blog) {
+      blogmodel.count().exec(function(err, count) {
+            if (err) return next(err)
+            res.render("index", {
+              user: users,
+              blogs: blog,
+              pageTitle: "Home",
+              path: "/",
+                current: page,
+                pages: Math.ceil(count / perPage)
+            })
+        })
+    })
   } catch (e) {
     console.log(e);
   }
   // return res.json({ status: true , message:"this is all blog", blog});
+
+ 
 };
 
 exports.getPubBlog = async (req, res) => {
@@ -120,6 +143,8 @@ exports.findBlogById = async (req, res) => {
 
 exports.findAuthor = async (req, res) => {
   try {
+    var perPage = 2
+    var page = req.params.page || 1
     var users = store.get("user");
     const authors = req.params.author;
     console.log(req.params);
@@ -130,13 +155,31 @@ if(blog.length === 0){
   return res.json({ status: true, message: "no record found", blog });
 }
     //return res.json({ status: true, message: "this is a blog", blog });
-    res.render("blog/myblog", {
-      blogs: blog,
-      user:users,
-      pageTitle: "My Blog",
-      path: "/myBlog",
-    });
+    // res.render("blog/myblog", {
+    //   blogs: blog,
+    //   user:users,
+    //   pageTitle: "My Blog",
+    //   path: "/myBlog",
+    // });
     // Product.findByPk(productId).then(product =>{
+
+      blogmodel
+      .find({myquery})
+      .skip((perPage * page) - perPage)
+      .limit(perPage)
+      .exec(function(err, blog) {
+        blogmodel.count().exec(function(err, count) {
+              if (err) return next(err)
+              res.render("blog/myblog", {
+                user: users,
+                blogs: blog,
+                pageTitle: "My Blog",
+                path: "/myBlog",
+                  current: page,
+                  pages: Math.ceil(count / perPage)
+              })
+          })
+      })
   } catch (e) {
     const blog ={}
     return res.json({ status: true, message: "no match found ", blog});

@@ -22,7 +22,7 @@
             <li class=" <%= user=== undefined ? 'visibility' : 'header-item'  %>">
 
                 <% if (typeof author != 'undefined'){ %>
-                    <a href="/get_a_published_blog_byAuthor/<%= author %>" class="<%= path === '/myBlog' ?  'active': '' %>">My blog</a>
+                    <a href="/get_a_published_blog_byAuthor/<%= author %>/" class="<%= path === '/myBlog' ?  'active': '' %>">My blog</a>
                  <% } else{ %>
                     <a href="/get_a_published_blog_byAuthor/" class="<%= path === '/myBlog' ?  'active': '' %>">My blog</a> 
                      <% } %>

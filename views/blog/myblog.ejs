@@ -29,7 +29,7 @@
         <% if (blogs.length> 0){ %>
             <div class="wrapper">
                 <% for(let blog of blogs) { %>
-                    <a href="/get_a_published_blog/<%=blog._id %>">
+                   
                     <article class="box">
                         <header class="card_header">
                             <h1 class="product__title">
@@ -50,31 +50,28 @@
                         </div>
 
                       
-                      
+                        <div class="card_actions">
+                              <% if (blog.state === "draft"){ %>
+                            <a href="/get_a_published_blog/<%=blog._id %>" class="btn" >Publish</a>
+                            <% } else{ %>
+                            <a href="/get_a_published_blog/<%=blog._id %>" class="btn" >Edit</a>
+                            <% }%>
+        
+                         
+                           
+                            
+                         
+                         
+                        </div>
+                        <form action="/deleteBlog/<%=blog._id %>" method="post">
+                            <button class="btn"  style="color: red; display:inline-flex;
+                            padding: 0;
+                            margin: 0;">Delete</button>
+                          
+                        </form>
                     </article>
-                </a>
-                <div style="display:inline-block;
-                padding: 0;
-                margin: 0;
                 
-              ">
-                      <% if (blog.state === "draft"){ %>
-                    <a href="/get_a_published_blog/<%=blog._id %>" class="btn" >Publish</a>
-                    <% } else{ %>
-                    <a href="/get_a_published_blog/<%=blog._id %>" class="btn" >Edit</a>
-                    <% }%>
-
-                    <form action="/deleteBlog/<%=blog._id %>" method="post">
-                        <button class="btn"  style="color: red; display:inline-flex;
-                        padding: 0;
-                        margin: 0;">Delete</button>
-                      
-                    </form>
-                   
-                    
-                 
-                 
-                </div>
+           
                     <% } %>
             </div>
             <% } else{ %>

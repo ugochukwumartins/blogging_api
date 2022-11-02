@@ -6,7 +6,7 @@ const blogmodel = require("../models/blogModel");
 
 exports.getAllPubBlog = async (req, res) => {
   try {
-    var perPage = 2
+    var perPage = 20
     var page = req.params.page || 1
     var users = store.get("user");
     //console.log(users.token);
@@ -143,7 +143,7 @@ exports.findBlogById = async (req, res) => {
 
 exports.findAuthor = async (req, res) => {
   try {
-    var perPage = 2
+    var perPage = 20
     var page = req.params.page || 1
     var users = store.get("user");
     const authors = req.params.author;

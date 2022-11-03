@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const path = require('path');
 const passport = require("passport");
-const usersModel = require("./models/userModel");
+const { connectToDb }  = require("./db");
 
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
@@ -12,7 +12,7 @@ require("./services/auth_with_jwt");
 const onboardingRoute = require("./routes/onboarding");
 const blogRoute = require("./routes/blogging");
 const httpreq = require("./routes/request");
-const PORT = 3000;
+const PORT = process.env.PORT;
 let User;
 const app = express();
 app.set("view engine", "ejs");
@@ -106,16 +106,17 @@ app.use(httpreq);
 //   }
 // );
 
-mongoose.connect("mongodb://localhost:27017");
+connectToDb();
+// mongoose.connect("mongodb://localhost:27017");
 
-mongoose.connection.on("connected", () => {
-  console.log("Connected to MongoDB Successfully");
-});
+// mongoose.connection.on("connected", () => {
+//   console.log("Connected to MongoDB Successfully");
+// });
 
-mongoose.connection.on("error", (err) => {
-  console.log("An error occurred while connecting to MongoDB");
-  console.log(err);
-});
+// mongoose.connection.on("error", (err) => {
+//   console.log("An error occurred while connecting to MongoDB");
+//   console.log(err);
+// });
 
 app.listen(PORT, () => {
   console.log("Listening on port, ", PORT);

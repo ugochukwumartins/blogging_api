@@ -211,6 +211,7 @@ exports.getCreateBlog = (req, res, next) => {
 exports.updateBlog = async (req, res) => {
 
   try{
+    var users = store.get("user");
   const blogId = req.params.id.toString();
   const bodyData = req.body;
   const blog = await blogmodel.findOne( { _id: blogId });
@@ -234,7 +235,14 @@ exports.updateBlog = async (req, res) => {
         res.send(err);
       } else {
        // res.json(result);
-        return res.json({ status: true, message: "Updated sucessfully",result});
+       res.render("blog/blogView", {
+        user: users,
+        blogs: blog,
+        pageTitle: "Read View",
+        path: "/myBlogView",
+         
+      })
+    //    return res.json({ status: true, message: "Updated sucessfully",result});
       }
     }
   );

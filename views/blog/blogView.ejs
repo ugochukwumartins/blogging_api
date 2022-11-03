@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= pageTitle %></title>
+    <link rel="stylesheet" href="/css/add_product.css">
+</head>
+<body>
+    <% if (typeof user != 'undefined'){ %>
+        <%- include('../layout/nav.ejs',{author : user.user_name}) %>
+     <% } else{ %>
+         <%- include('../layout/nav.ejs') %>   
+         <% } %>
+    
+    <main>
+        <% if (blogs !=null){ %>
+     
+
+            <div class="form-control" >
+
+                <div style="vertical-align:baseline;">
+              <h3>Title :</h3>
+                <label for="title" class="product__title"><%= blogs.title %> </label>
+            </div>
+                <div>
+                    <h3>Author :</h3>
+                <label for="title"><%= blogs.author %></label>
+            </div>
+                <div>
+                    <h3>Description : </h3>
+                <label for="title"><%= blogs.description %></label>
+            </div>
+                <div>
+                    <h3>Tag :</h3>
+                <label for="title"><%= blogs.tags%></label>
+            </div>
+                <div>
+                    <h3>Body :</h3>
+                <p><%= blogs.body %></p>
+            </div>
+               
+            </div>
+            <% } %>
+           
+    </main>
+</body>
+</html>

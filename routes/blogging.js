@@ -15,6 +15,7 @@ const blogRouter = express.Router();
   blogRouter.get("/createBlog",blogController.getCreateBlog );
   blogRouter.get("/updateBlog/:id",blogController.updateBlog);
   blogRouter.post("/updateBlogdetails/:id",blogController.updateBlogByDetails);
+  blogRouter.post("/searched_query/:page?",blogController.getSearchPubBlog);
   blogRouter.get("/:page?",blogController.getAllPubBlog );
   
 

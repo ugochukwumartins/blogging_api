@@ -14,16 +14,13 @@
 
 <body>
     <% if (typeof user != 'undefined'){ %>
-           <%- include('./layout/nav.ejs',{author : user.user_name}) %>
+           <%- include('../layout/nav.ejs',{author : user.user_name}) %>
         <% } else{ %>
-            <%- include('./layout/nav.ejs') %>   
+            <%- include('../layout/nav.ejs') %>   
             <% } %>
 
     <main>
-        <form action="/searched_query" method="post">
-            <input type="text" name="searchQ" id="searchQ" placeholder="Book Title or Author">
-            <input type="submit">
-        </form>
+     
         <% if (blogs.length> 0){ %>
             <div class="wrapper">
                 <% for(let blog of blogs) { %>

@@ -290,3 +290,64 @@ exports.updateBlogByDetails = async (req, res) => {
 
   }
 };
+
+
+
+exports.getSearchPubBlog = async (req, res) => {
+  try {
+    var perPage = 20
+    var searchedquery= req.body.searchQ;
+    var page = req.params.page || 1
+    var users = store.get("user");
+    //console.log(users.token);
+    // const blogs = await blogmodel.find();
+    // const blog = await blogs.filter((blog) => {
+    //   return blog.state === "published";
+    // });
+
+    // res.render("index", {
+    //   user: users,
+    //   blogs: blog,
+    //   pageTitle: "Home",
+    //   path: "/",
+    // });
+
+
+    blogmodel
+    .find( {
+      state: "published",
+      $or: [
+     
+         { author: searchedquery}, {title:searchedquery}, {tags:searchedquery}
+      ]
+   })
+    .skip((perPage * page) - perPage)
+    .limit(perPage)
+    .exec(function(err, blog) {
+   
+      blogmodel.count().exec(function(err, count) {
+            if (err) return next(err)
+        //   var results=  blog.find( {
+        //       $or: [
+             
+        //          { author: searchedquery}, {title:searchedquery}, {tags:searchedquery}
+        //       ]
+        //    }
+        // ).pretty()
+            res.render("blog/search_result", {
+              user: users,
+              blogs: blog,
+              pageTitle: "Search Result",
+              path: "/",
+                current: page,
+                pages: Math.ceil(count / perPage)
+            })
+        })
+    })
+  } catch (e) {
+    console.log(e);
+  }
+  // return res.json({ status: true , message:"this is all blog", blog});
+
+ 
+};

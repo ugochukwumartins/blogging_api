@@ -4,7 +4,7 @@
   "description": "blogApi",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --detectOpenHandles",
     "start": "nodemon app.js"
   },
   "author": "martins ugochukwu",
@@ -25,5 +25,9 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "store": "^2.0.12"
+  },
+  "devDependencies": {
+    "jest": "^29.2.2",
+    "supertest": "^6.3.1"
   }
 }

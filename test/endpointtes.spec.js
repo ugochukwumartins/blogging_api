@@ -16,11 +16,11 @@ describe('Auth: Signup', () => {
         const response = await request(app).post('/register')
         .set('content-type', 'application/json')
         .send({ 
-            user_name : 'tobiw', 
+            user_name : 'ugo', 
             password: 'Password123', 
-            first_name: 'tobie',
+            first_name: 'ugob',
             last_name: 'Augustina',
-            email: 'tobi@mail.com',
+            email: 'ugo66@mail.com',
             age:34
         })
 
@@ -61,10 +61,105 @@ describe('Auth: Signup', () => {
         });
     console.log(response._data)
 
+        expect(response.status).toBe(302)
+        //expect(response.body).toHaveProperty('message')
+          
+    })
+
+
+
+     it('should  get a published blog', async () => {
+      
+
+    
+        const response = await request(app)
+        .get('/get_a_published_blog')
+        .set('content-type', 'application/json')
+        ;
+    console.log(response._data)
+
         expect(response.status).toBe(200)
         expect(response.body).toHaveProperty('message')
           
     })
+
+    it('should update blog  details by id', async () => {
+      
+
+    
+        const response = await request(app)
+        .post('/updateBlogdetails/6364dd4cf1d1d027d5581042')
+        .set('content-type', 'application/json')
+        ;
+    console.log(response._data)
+
+        expect(response.status).toBe(302)
+      
+          
+    })
+
+    it('should create blog ', async () => {
+      
+
+    
+        const response = await request(app)
+        .post('/create_blog')
+        .set('content-type', 'application/json')
+        ;
+    console.log(response._data)
+
+        expect(response.status).toBe(401)
+       
+          
+    })
+
+    it('get a published blog by author ', async () => {
+      
+
+    
+        const response = await request(app)
+        .get('/get_a_published_blog_byAuthor/:author/:page?')
+        .set('content-type', 'application/json')
+       ;
+    console.log(response._data)
+
+        expect(response.status).toBe(200)
+        expect(response.body).toHaveProperty('message')
+          
+    })
+
+    it('should get update blog by id ', async () => {
+      
+
+    
+        const response = await request(app)
+        .get('/updateBlog/:id')
+        .set('content-type', 'application/json')
+      ;
+    console.log(response._data)
+
+        expect(response.status).toBe(200)
+        expect(response.body).toHaveProperty('message')
+          
+    })
+
+   
+
+    it('get all publish blog', async () => {
+      
+
+    
+        const response = await request(app)
+        .get('/:page?')
+        .set('content-type', 'application/json')
+        ;
+    console.log(response._data)
+
+        expect(response.status).toBe(200)
+       
+          
+    })
+
 
 
 

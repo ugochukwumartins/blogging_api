@@ -152,6 +152,12 @@ exports.findAuthor = async (req, res) => {
     var myquery = { author: authors};
     const blog = await blogmodel.find(myquery);
 if(blog.length === 0){
+  res.render("error", {
+    errors:'no record found',
+   // blogs: blog,
+    pageTitle: "Error",
+    path: "/error",
+  });
   return res.json({ status: true, message: "no record found", blog });
 }
     //return res.json({ status: true, message: "this is a blog", blog });

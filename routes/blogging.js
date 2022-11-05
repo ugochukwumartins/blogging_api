@@ -5,7 +5,7 @@ const blogRouter = express.Router();
 
 
 
-
+blogRouter.get("/:page?",blogController.getAllPubBlog );
   
   blogRouter.get("/get_a_published_blog",blogController.getPubBlog );
   blogRouter.post("/create_blog",passport.authenticate('jwt', { session: false }), blogController.createPubBlog);
@@ -16,7 +16,7 @@ const blogRouter = express.Router();
   blogRouter.get("/updateBlog/:id",blogController.updateBlog);
   blogRouter.post("/updateBlogdetails/:id",blogController.updateBlogByDetails);
   blogRouter.post("/searched_query/:page?",blogController.getSearchPubBlog);
-  blogRouter.get("/:page?",blogController.getAllPubBlog );
+ // blogRouter.get("/:page?",blogController.getAllPubBlog );
   
 
   module.exports = blogRouter;

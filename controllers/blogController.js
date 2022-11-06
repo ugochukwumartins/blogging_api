@@ -6,54 +6,36 @@ const blogmodel = require("../models/blogModel");
 
 exports.getAllPubBlog = async (req, res) => {
   try {
-    var perPage = 20
-    var page = req.params.page || 1
+    var perPage = 20;
+    var page = req.params.page || 1;
     var users = store.get("user");
-    //console.log(users.token);
-    // const blogs = await blogmodel.find();
-    // const blog = await blogs.filter((blog) => {
-    //   return blog.state === "published";
-    // });
-
-    // res.render("index", {
-    //   user: users,
-    //   blogs: blog,
-    //   pageTitle: "Home",
-    //   path: "/",
-    // });
-
 
     blogmodel
-    .find({state :"published"})
-    .skip((perPage * page) - perPage)
-    .limit(perPage)
-    .exec(function(err, blog) {
-      blogmodel.count().exec(function(err, count) {
-            if (err) return next(err)
-            res.render("index", {
-              user: users,
-              blogs: blog,
-              pageTitle: "Home",
-              path: "/",
-                current: page,
-                pages: Math.ceil(count / perPage)
-            })
-        })
-    })
+      .find({ state: "published" })
+      .skip(perPage * page - perPage)
+      .limit(perPage)
+      .exec(function (err, blog) {
+        blogmodel.count().exec(function (err, count) {
+          if (err) return next(err);
+          res.render("index", {
+            user: users,
+            blogs: blog,
+            pageTitle: "Home",
+            path: "/",
+            current: page,
+            pages: Math.ceil(count / perPage),
+          });
+        });
+      });
   } catch (e) {
     console.log(e);
   }
   // return res.json({ status: true , message:"this is all blog", blog});
-
- 
 };
 
 exports.getPubBlog = async (req, res) => {
   try {
     const blog = await blogmodel.find({ state: "published" }).limit(1);
-    // const blog = await blogs.filter((blog) => {
-    //   return blog.state ==="draft";
-    // });
 
     return res.json({ status: true, message: "this is a blog", blog });
   } catch (e) {
@@ -98,15 +80,6 @@ exports.deleteBlog = async (req, res) => {
   } catch (e) {
     console.log(e);
   }
-  // Product.findByPk(productId).then(product =>{
-
-  //  return product.destroy();
-  // }).then(result =>{
-  //   console.log('result');
-  //   res.redirect("/");
-  // }).catch(erro =>{
-  //   console.log(erro);
-  // });
 };
 
 exports.findBlogById = async (req, res) => {
@@ -118,242 +91,158 @@ exports.findBlogById = async (req, res) => {
     var myquery = { _id: blogId };
     const blog = await blogmodel.findOne(myquery);
 
-   // return res.json({ status: true, message: "this is a blog", blog });
+    // return res.json({ status: true, message: "this is a blog", blog });
     res.render("blog/updateBlog", {
       user: users,
-      blogFound : blog,
+      blogFound: blog,
       pageTitle: "Up Date Blog",
       path: "/updateBlogses",
     });
     // Product.findByPk(productId).then(product =>{
   } catch (e) {
-    const blog ={}
-    return res.json({ status: true, message: "no match found ", blog});
+    const blog = {};
+    return res.json({ status: true, message: "no match found ", blog });
   }
-  //  return product.destroy();
-  // }).then(result =>{
-  //   console.log('result');
-  //   res.redirect("/");
-  // }).catch(erro =>{
-  //   console.log(erro);
-  // });
 };
-
-
 
 exports.findAuthor = async (req, res) => {
   try {
-    var perPage = 20
-    var page = req.params.page || 1
+    var perPage = 20;
+    var page = req.params.page || 1;
     var users = store.get("user");
     const authors = req.params.author;
     console.log(req.params);
     console.log(req.params.author);
-    var myquery = { author: authors};
+    var myquery = { author: authors };
     const blog = await blogmodel.find(myquery);
-if(blog.length === 0){
-  res.render("error", {
-    errors:'no record found',
-   // blogs: blog,
-    pageTitle: "Error",
-    path: "/error",
-  });
-  return res.json({ status: true, message: "no record found", blog });
-}
-    //return res.json({ status: true, message: "this is a blog", blog });
-    // res.render("blog/myblog", {
-    //   blogs: blog,
-    //   user:users,
-    //   pageTitle: "My Blog",
-    //   path: "/myBlog",
-    // });
-    // Product.findByPk(productId).then(product =>{
+    if (blog.length === 0) {
+      res.render("error", {
+        errors: "no record found",
+        // blogs: blog,
+        pageTitle: "Error",
+        path: "/error",
+      });
+      return res.json({ status: true, message: "no record found", blog });
+    }
 
-      blogmodel
-      .find({myquery})
-      .skip((perPage * page) - perPage)
+    blogmodel
+      .find({ myquery })
+      .skip(perPage * page - perPage)
       .limit(perPage)
-      .exec(function(err, blog) {
-        blogmodel.count().exec(function(err, count) {
-              if (err) return next(err)
-              res.render("blog/myblog", {
-                user: users,
-                blogs: blog,
-                pageTitle: "My Blog",
-                path: "/myBlog",
-                  current: page,
-                  pages: Math.ceil(count / perPage)
-              })
-          })
-      })
+      .exec(function (err, blog) {
+        blogmodel.count().exec(function (err, count) {
+          if (err) return next(err);
+          res.render("blog/myblog", {
+            user: users,
+            blogs: blog,
+            pageTitle: "My Blog",
+            path: "/myBlog",
+            current: page,
+            pages: Math.ceil(count / perPage),
+          });
+        });
+      });
   } catch (e) {
-    const blog ={}
-    return res.json({ status: true, message: "no match found ", blog});
+    const blog = {};
+    return res.json({ status: true, message: "no match found ", blog });
   }
-  //  return product.destroy();
-  // }).then(result =>{
-  //   console.log('result');
-  //   res.redirect("/");
-  // }).catch(erro =>{
-  //   console.log(erro);
-  // });
 };
 
 exports.getCreateBlog = (req, res, next) => {
-  var users= store.get('user');
+  var users = store.get("user");
   res.render("blog/createBlog", {
-     user:users,
+    user: users,
     // blogs: blog,
-     pageTitle: "Add blog",
-     path: "/createBlog",
-   });
+    pageTitle: "Add blog",
+    path: "/createBlog",
+  });
 };
 
-
-
-
-
-
 exports.updateBlog = async (req, res) => {
-
-  try{
+  try {
     var users = store.get("user");
-  const blogId = req.params.id.toString();
-  const bodyData = req.body;
-  const blog = await blogmodel.findOne( { _id: blogId });
-  const updateval = {
-    // _id: bodyData._id,
-    // title: bodyData.title,
-    // description: bodyData.description,
-    // author: bodyData.author,
-    // state: bodyData.state,
-    read_count:blog.read_count  +1,
-    // reading_time: bodyData.reading_time,
-    // tags: bodyData.tags,
-    // body: bodyData.body,
-    // timestamp: bodyData.timestamp,
-  };
-  blogmodel.updateOne(
-    { _id: blogId },
-    updateval ,
-    function (err, result) {
+    const blogId = req.params.id.toString();
+    const bodyData = req.body;
+    const blog = await blogmodel.findOne({ _id: blogId });
+    const updateval = {
+      read_count: blog.read_count + 1,
+    };
+    blogmodel.updateOne({ _id: blogId }, updateval, function (err, result) {
       if (err) {
         res.send(err);
       } else {
-       // res.json(result);
-       res.render("blog/blogView", {
-        user: users,
-        blogs: blog,
-        pageTitle: "Read View",
-        path: "/myBlogView",
-         
-      })
-    //    return res.json({ status: true, message: "Updated sucessfully",result});
+        // res.json(result);
+        res.render("blog/blogView", {
+          user: users,
+          blogs: blog,
+          pageTitle: "Read View",
+          path: "/myBlogView",
+        });
+        //    return res.json({ status: true, message: "Updated sucessfully",result});
       }
-    }
-  );
-
-  }catch(e){
-
-  }
+    });
+  } catch (e) {}
 };
 
-
-
-
 exports.updateBlogByDetails = async (req, res) => {
+  try {
+    const blogId = req.params.id.toString();
+    const bodyData = req.body;
+    const blog = await blogmodel.findOne({ _id: blogId });
+    const updateval = {
+      title: bodyData.title,
+      description: bodyData.description,
 
-  try{
-  const blogId = req.params.id.toString();
-  const bodyData = req.body;
-  const blog = await blogmodel.findOne( { _id: blogId });
-  const updateval = {
-    
-    title: bodyData.title,
-    description: bodyData.description,
-   
-    state: bodyData.state,
-   
- 
-    tags: bodyData.tags,
-    body: bodyData.body,
-  
-  };
-  blogmodel.updateOne(
-    { _id: blogId },
-    updateval ,
-    function (err, result) {
+      state: bodyData.state,
+
+      tags: bodyData.tags,
+      body: bodyData.body,
+    };
+    blogmodel.updateOne({ _id: blogId }, updateval, function (err, result) {
       if (err) {
         res.send(err);
       } else {
         res.redirect("/");
-       // return res.json({ status: true, message: "Updated sucessfully",result});
+        // return res.json({ status: true, message: "Updated sucessfully",result});
       }
-    }
-  );
-
-  }catch(e){
-
-  }
+    });
+  } catch (e) {}
 };
-
-
 
 exports.getSearchPubBlog = async (req, res) => {
   try {
-    var perPage = 20
-    var searchedquery= req.body.searchQ;
-    var page = req.params.page || 1
+    var perPage = 20;
+    var searchedquery = req.body.searchQ;
+    var page = req.params.page || 1;
     var users = store.get("user");
-    //console.log(users.token);
-    // const blogs = await blogmodel.find();
-    // const blog = await blogs.filter((blog) => {
-    //   return blog.state === "published";
-    // });
-
-    // res.render("index", {
-    //   user: users,
-    //   blogs: blog,
-    //   pageTitle: "Home",
-    //   path: "/",
-    // });
-
 
     blogmodel
-    .find( {
-      state: "published",
-      $or: [
-     
-         { author: searchedquery}, {title:searchedquery}, {tags:searchedquery}
-      ]
-   })
-    .skip((perPage * page) - perPage)
-    .limit(perPage)
-    .exec(function(err, blog) {
-   
-      blogmodel.count().exec(function(err, count) {
-            if (err) return next(err)
-        //   var results=  blog.find( {
-        //       $or: [
-             
-        //          { author: searchedquery}, {title:searchedquery}, {tags:searchedquery}
-        //       ]
-        //    }
-        // ).pretty()
-            res.render("blog/search_result", {
-              user: users,
-              blogs: blog,
-              pageTitle: "Search Result",
-              path: "/",
-                current: page,
-                pages: Math.ceil(count / perPage)
-            })
-        })
-    })
+      .find({
+        state: "published",
+        $or: [
+          { author: searchedquery },
+          { title: searchedquery },
+          { tags: searchedquery },
+        ],
+      })
+      .skip(perPage * page - perPage)
+      .limit(perPage)
+      .exec(function (err, blog) {
+        blogmodel.count().exec(function (err, count) {
+          if (err) return next(err);
+
+          res.render("blog/search_result", {
+            user: users,
+            blogs: blog,
+            pageTitle: "Search Result",
+            path: "/",
+            current: page,
+            pages: Math.ceil(count / perPage),
+          });
+        });
+      });
   } catch (e) {
     console.log(e);
   }
   // return res.json({ status: true , message:"this is all blog", blog});
-
- 
 };

@@ -53,7 +53,7 @@ exports.login=(req,res, next)=>{
             body.token= token;
             console.log(body);
             store.set('user', body)
-            //localStorage.setItem("User",body )
+           
            
             res.redirect('/')
            // return res.json({ status: true, token: token, User });

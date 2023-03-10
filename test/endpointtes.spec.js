@@ -20,7 +20,7 @@ describe('Auth: Signup', () => {
             password: 'Password123', 
             first_name: 'ugob',
             last_name: 'Augustina',
-            email: 'ugo66@mail.com',
+            email: 'ugo366@mail.com',
             age:34
         })
 
